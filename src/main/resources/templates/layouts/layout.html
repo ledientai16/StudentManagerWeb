@@ -1,0 +1,26 @@
+<!-- layout.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+<head>
+    <title th:text="${title}">Default Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/global.css}" />
+
+    <!-- Other global head elements -->
+</head>
+<body>
+    <div th:insert="this :: common-css">
+        <!-- Your CSS links go here -->
+        <link/>
+        <!-- Add other CSS links as needed -->
+    </div>
+    <header th:include="fragments/header :: header"></header>
+
+    <div class="content" th:insert="this :: content">
+        <!-- Default content (if any) -->
+    </div>
+
+    <footer th:include="fragments/footer :: footer"></footer>
+    <script th:src="@{/js/global.js}"></script>
+</body>
+</html>
