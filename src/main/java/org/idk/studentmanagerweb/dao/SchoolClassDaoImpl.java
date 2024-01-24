@@ -25,13 +25,16 @@ public class SchoolClassDaoImpl implements SchoolClassDao{
 
     @Override
     public List<SchoolClass> findSchoolClasses(String className, String roomName) {
+        String classNameFilter = className == null ? "" : className;
+        String roomNameFilter = roomName == null ? "" : roomName;
+
         String jpql = "FROM SchoolClass " +
                 "Where className like :className " +
                 "And roomNumber like :roomName";
 
         TypedQuery<SchoolClass> query = entityManager.createQuery(jpql, SchoolClass.class);
-        query.setParameter("className", "%" + className + "%");
-        query.setParameter("roomName", "%" + roomName + "%");
+        query.setParameter("className", "%" + classNameFilter + "%");
+        query.setParameter("roomName", "%" + roomNameFilter + "%");
 
         return query.getResultList();
     }

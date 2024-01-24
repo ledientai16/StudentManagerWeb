@@ -4,9 +4,12 @@ import org.idk.studentmanagerweb.entity.SchoolClass;
 import org.idk.studentmanagerweb.entity.Student;
 import org.idk.studentmanagerweb.service.SchoolClassService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,13 +30,25 @@ public class SchoolClassController {
             @RequestParam(name = "isSearchAll", required = false) Boolean isSearchAll,
             Model model
     ) {
-        if (isSearchAll) {
-//            List<SchoolClass>
-//            = schoolClassService.();
+        List<SchoolClass> schoolClassList;
+        if (isSearchAll != null && isSearchAll) {
+            schoolClassList = schoolClassService.findALl();
+        } else {
+            schoolClassList = schoolClassService.findSchoolClasses(className, roomName);
         }
-        List<SchoolClass> schoolClasses = schoolClassService.findALl();
-        System.out.println("schoolClasses: " + schoolClasses);
-        model.addAttribute("schoolList", schoolClasses);
+        model.addAttribute("schoolList", schoolClassList);
+
+        System.out.println("" + className);
+        System.out.println("roomName" + roomName);
+        model.addAttribute("className", className);
+        model.addAttribute("roomName", roomName);
         return "/school-class/class-list";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder webDataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+
     }
 }

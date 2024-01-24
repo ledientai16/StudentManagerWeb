@@ -68,7 +68,7 @@ public class StudentController {
     }
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
-         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 }

@@ -17,4 +17,9 @@ public class SchoolClassServiceImpl implements SchoolClassService{
     public List<SchoolClass> findALl() {
         return schoolClassDao.findAll();
     }
+
+    @Override
+    public List<SchoolClass> findSchoolClasses(String className, String roomName) {
+        return schoolClassDao.findSchoolClasses(className, roomName);
+    }
 }

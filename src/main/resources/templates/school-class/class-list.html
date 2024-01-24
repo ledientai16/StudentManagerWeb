@@ -14,11 +14,11 @@
                 <div class="row">
                     <label class="col-sm search-input-col" for="name-filter-input">Class Name</label>
                     <div class="col-sm search-input-col">
-                        <input id="name-filter-input" type="text" name="studentName" th:value="${className}">
+                        <input id="name-filter-input" type="text" name="className" th:value="${className}">
                     </div>
                     <label class="col-sm search-input-col" for="room-filter-input">Room Name</label>
                     <div class="col-sm search-input-col">
-                        <input id="room-filter-input" type="text" name="studentName" th:value="${roomName}">
+                        <input id="room-filter-input" type="text" name="roomName" th:value="${roomName}">
                     </div>
 
                     <div class="col-sm search-input-col">
@@ -28,7 +28,7 @@
                         <a class="btn btn-primary" th:href="@{/class/class-list(isSearchAll=true)}">Find all</a>
                     </div>
                     <div class="col-sm search-input-col">
-                        <a class="btn btn-success" th:href="@{/student/student-form}">CREATE STUDENT</a>
+                        <a class="btn btn-success" th:href="@{/class/class-form}">CREATE Class</a>
                     </div>
                 </div>
             </form>
