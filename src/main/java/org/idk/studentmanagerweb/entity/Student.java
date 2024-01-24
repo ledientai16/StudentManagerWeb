@@ -1,6 +1,8 @@
 package org.idk.studentmanagerweb.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -13,17 +15,22 @@ public class Student {
     @Column(name="studentid")
     private int id;
     @Column(name="firstname")
+    @NotNull(message = "You need enter first name")
     private String firstName;
     @Column(name="lastname")
+    @NotNull(message = "you need enter last name")
     private String lastName;
     @Column(name="dateofbirth")
     @Temporal(TemporalType.DATE)
-    private LocalDate dob;
-
+    @NotNull(message = "you need enter DOB")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dob;
     @Column(name="gender")
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "you need choose gender")
     private Gender gender;
     @Column(name="address")
+    @NotNull(message = "you need enter address")
     private String address;
     @ManyToOne
     @JoinColumn(name = "classid")
@@ -53,11 +60,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public LocalDate  getDob() {
+    public Date  getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate  dob) {
+    public void setDob(Date  dob) {
         this.dob = dob;
     }
 

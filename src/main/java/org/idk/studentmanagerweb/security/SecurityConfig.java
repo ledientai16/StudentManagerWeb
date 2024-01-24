@@ -33,7 +33,11 @@ public class SecurityConfig{
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/home").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/student").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.GET, "/student/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.POST, "/student/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.GET, "/class/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.POST, "/class/**").hasRole("EMPLOYEE")
+
                         .requestMatchers(HttpMethod.GET, "/api/employee/**").hasRole("EMPLOYEE")
                         .requestMatchers(HttpMethod.POST, "/api/employees").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.PUT, "/api/employees").hasRole("MANAGER")
