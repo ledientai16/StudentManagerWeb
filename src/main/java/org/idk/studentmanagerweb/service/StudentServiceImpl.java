@@ -6,6 +6,7 @@ import org.idk.studentmanagerweb.entity.Gender;
 import org.idk.studentmanagerweb.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,5 +26,10 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findStudents(String name, Gender gender) {
         List<Student> students = studentDao.findStudents(name, gender);
         return students;
+    }
+    @Override
+    @Transactional
+    public void save(Student student) {
+        studentDao.save(student);
     }
 }

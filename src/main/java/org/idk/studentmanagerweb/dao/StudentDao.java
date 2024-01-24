@@ -8,4 +8,5 @@ import java.util.List;
 public interface StudentDao {
     List<Student> findAll();
     List<Student> findStudents(String name, Gender gender);
+    void save(Student student);
 }
