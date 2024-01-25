@@ -37,18 +37,13 @@ public class SchoolClassController {
             schoolClassList = schoolClassService.findSchoolClasses(className, roomName);
         }
         model.addAttribute("schoolList", schoolClassList);
-
-        System.out.println("" + className);
-        System.out.println("roomName" + roomName);
         model.addAttribute("className", className);
         model.addAttribute("roomName", roomName);
         return "/school-class/class-list";
     }
-
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-
     }
 }

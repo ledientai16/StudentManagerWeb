@@ -9,4 +9,6 @@ public interface StudentService {
     List<Student> findAll();
     List<Student> findStudents(String name, Gender gender);
     void save(Student student);
+    Student findStudentById(Integer id);
+    void deleteStudent(Student delStudent);
 }
