@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="layouts/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:fragment="common-css">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/student.css}"/>
+    </div>
+    <div th:fragment="content">
+        <form th:action="@{/class/class-form}" th:object="${schoolCls}" method="post">
+             <div class="mb-3 mt-3">
+                <label for="firstName" class="form-label">First Name:</label>
+                <input type="text" id="firstName" class="form-control" th:field="*{className}">
+                <span class="text-danger" th:if="${#fields.hasErrors('className')}"
+                      th:each="err : ${#fields.errors('className')}"
+                      th:text="${err}"
+                      th:errors="*{className}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="roomNumber" class="form-label">room Number:</label>
+                <input type="text" id="roomNumber" class="form-control" th:field="*{roomNumber}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('roomNumber')}"
+                      th:each="err : ${#fields.errors('roomNumber')}"
+                      th:text="${err}"
+                      th:errors="*{roomNumber}"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

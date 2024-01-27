@@ -1,5 +1,6 @@
 package org.idk.studentmanagerweb.controller;
 
+import jakarta.validation.Valid;
 import org.idk.studentmanagerweb.entity.SchoolClass;
 import org.idk.studentmanagerweb.entity.Student;
 import org.idk.studentmanagerweb.service.SchoolClassService;
@@ -7,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +39,29 @@ public class SchoolClassController {
         model.addAttribute("className", className);
         model.addAttribute("roomName", roomName);
         return "/school-class/class-list";
+    }
+
+    @GetMapping("/class-form")
+    public String showClassForm(Model theModel) {
+        theModel.addAttribute("schoolCls", new SchoolClass());
+        System.out.println("schoolClass: " );
+        return "/school-class/class-form";
+    }
+
+    @PostMapping("/class-form")
+    public String saveClass(
+            @Valid @ModelAttribute("schoolCls") SchoolClass schoolClass,
+            BindingResult bindingResult,
+            Model theModel
+    ) {
+        System.out.println("schoolClassasassa : " + schoolClass.getClassName());
+        System.out.println("schoolClassasassa : " + schoolClass.getRoomNumber());
+        if (bindingResult.hasErrors()) {
+            return "/school-class/class-form";
+        } else{
+            schoolClassService.save(schoolClass);
+            return "redirect:/class/class-form";
+        }
     }
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {

@@ -4,6 +4,7 @@ import org.idk.studentmanagerweb.dao.SchoolClassDao;
 import org.idk.studentmanagerweb.entity.SchoolClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -21,5 +22,11 @@ public class SchoolClassServiceImpl implements SchoolClassService{
     @Override
     public List<SchoolClass> findSchoolClasses(String className, String roomName) {
         return schoolClassDao.findSchoolClasses(className, roomName);
+    }
+
+    @Override
+    @Transactional
+    public void save(SchoolClass schoolClass) {
+        schoolClassDao.save(schoolClass);
     }
 }

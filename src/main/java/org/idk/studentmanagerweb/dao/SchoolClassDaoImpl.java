@@ -44,4 +44,9 @@ public class SchoolClassDaoImpl implements SchoolClassDao{
         SchoolClass schoolClass = entityManager.find(SchoolClass.class, id);
         return schoolClass;
     }
+
+    @Override
+    public void save(SchoolClass schoolClass) {
+        entityManager.merge(schoolClass);
+    }
 }

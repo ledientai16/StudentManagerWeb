@@ -22,6 +22,12 @@ import java.util.List;
 public class StudentController {
     private StudentService studentService;
     private SchoolClassService schoolClassService;
+    @ModelAttribute("classLst")
+    public List<SchoolClass> schoolClasses () {
+        List<SchoolClass> schoolClasses = schoolClassService.findALl();
+        return schoolClasses;
+    }
+
     @Autowired
     public StudentController(StudentService tempStudentService, SchoolClassService tempSchoolClassService) {
         this.studentService = tempStudentService;
@@ -54,11 +60,9 @@ public class StudentController {
     @GetMapping("/student-form")
     public String showStudentForm(Model theModel) {
         Student createStudent = new Student();
-        List<SchoolClass> schoolClasses = schoolClassService.findALl();
         theModel.addAttribute("student", createStudent);
         theModel.addAttribute("gender", Gender.values());
-        theModel.addAttribute("classLst", schoolClasses);
-        System.out.println("schoolClasses: " + schoolClasses);
+
         return "/students/student-form";
     }
     @GetMapping("/student-form/{id}")
