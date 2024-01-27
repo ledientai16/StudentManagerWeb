@@ -4,11 +4,13 @@ import org.idk.studentmanagerweb.dao.StudentDao;
 import org.idk.studentmanagerweb.dao.StudentDaoImpl;
 import org.idk.studentmanagerweb.entity.Gender;
 import org.idk.studentmanagerweb.entity.Student;
+import org.idk.studentmanagerweb.exception.StudentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -31,5 +33,18 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public void save(Student student) {
         studentDao.save(student);
+    }
+
+    @Override
+    public Student findStudentById(Integer id) {
+        Optional<Student> findStudent = Optional.ofNullable(studentDao.findStudentById(id));
+
+        return findStudent.orElseThrow(() -> new StudentNotFoundException("Student not found"));
+    }
+
+    @Override
+    @Transactional
+    public void deleteStudent(Student delStudent) {
+        studentDao.deleteStudent(delStudent);
     }
 }

@@ -1,8 +1,11 @@
 package org.idk.studentmanagerweb.controller;
 
 import jakarta.validation.Valid;
+import org.hibernate.annotations.Parameter;
 import org.idk.studentmanagerweb.entity.Gender;
+import org.idk.studentmanagerweb.entity.SchoolClass;
 import org.idk.studentmanagerweb.entity.Student;
+import org.idk.studentmanagerweb.service.SchoolClassService;
 import org.idk.studentmanagerweb.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -18,9 +21,17 @@ import java.util.List;
 @RequestMapping("/student")
 public class StudentController {
     private StudentService studentService;
+    private SchoolClassService schoolClassService;
+    @ModelAttribute("classLst")
+    public List<SchoolClass> schoolClasses () {
+        List<SchoolClass> schoolClasses = schoolClassService.findALl();
+        return schoolClasses;
+    }
+
     @Autowired
-    public StudentController(StudentService tempStudentService) {
+    public StudentController(StudentService tempStudentService, SchoolClassService tempSchoolClassService) {
         this.studentService = tempStudentService;
+        this.schoolClassService = tempSchoolClassService;
     }
     @GetMapping("/student-list")
     public String showStudentTable(
@@ -51,6 +62,18 @@ public class StudentController {
         Student createStudent = new Student();
         theModel.addAttribute("student", createStudent);
         theModel.addAttribute("gender", Gender.values());
+
+        return "/students/student-form";
+    }
+    @GetMapping("/student-form/{id}")
+    public String showUpdateForm(
+            @PathVariable("id") Integer id,
+            Model theModel) {
+        List<SchoolClass> schoolClasses = schoolClassService.findALl();
+        Student updateStudent = studentService.findStudentById(id);
+        theModel.addAttribute("student", updateStudent);
+        theModel.addAttribute("gender", Gender.values());
+        theModel.addAttribute("classLst", schoolClasses);
         return "/students/student-form";
     }
     @PostMapping("/student-form")
@@ -58,13 +81,20 @@ public class StudentController {
             @Valid @ModelAttribute("student") Student student,
             BindingResult bindingResult, Model theModel) {
         theModel.addAttribute("gender", Gender.values());
+        theModel.addAttribute("classLst", schoolClassService.findALl());
         if (bindingResult.hasErrors()) {
-//            theModel.addAttribute("student", student);
-            return "/students/student-form";
+             return "/students/student-form";
         } else {
             studentService.save(student);
             return "redirect:/student/student-list";
         }
+    }
+
+    @PostMapping("/student-delete/{id}")
+    public String deleteStudent(@PathVariable("id")Integer id) {
+        Student delStudent = studentService.findStudentById(id);
+        studentService.deleteStudent(delStudent);
+        return "redirect:/student/student-list";
     }
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {

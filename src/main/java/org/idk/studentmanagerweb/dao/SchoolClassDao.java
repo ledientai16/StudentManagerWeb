@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface SchoolClassDao {
     List<SchoolClass> findAll();
-
     List<SchoolClass> findSchoolClasses(String className, String roomName);
+    SchoolClass findClassById(Integer id);
+
+    void save(SchoolClass schoolClass);
 }

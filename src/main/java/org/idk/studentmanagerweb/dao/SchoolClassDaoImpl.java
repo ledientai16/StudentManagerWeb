@@ -38,4 +38,15 @@ public class SchoolClassDaoImpl implements SchoolClassDao{
 
         return query.getResultList();
     }
+
+    @Override
+    public SchoolClass findClassById(Integer id) {
+        SchoolClass schoolClass = entityManager.find(SchoolClass.class, id);
+        return schoolClass;
+    }
+
+    @Override
+    public void save(SchoolClass schoolClass) {
+        entityManager.merge(schoolClass);
+    }
 }

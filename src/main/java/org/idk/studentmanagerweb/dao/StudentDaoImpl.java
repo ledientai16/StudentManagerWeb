@@ -44,4 +44,16 @@ public class StudentDaoImpl implements StudentDao{
     public void save(Student student) {
         entityManager.merge(student);
     }
+
+    @Override
+    public Student findStudentById(Integer id) {
+        Student findStudent = entityManager.find(Student.class, id);
+
+        return findStudent;
+    }
+
+    @Override
+    public void deleteStudent(Student delStudent) {
+        entityManager.remove(delStudent);
+    }
 }

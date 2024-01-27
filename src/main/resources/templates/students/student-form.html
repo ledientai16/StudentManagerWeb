@@ -11,6 +11,7 @@
     <div th:fragment="content">
         <div class="student-form">
             <form th:action="@{/student/student-form}" th:object="${student}" method="post">
+                <input type="hidden" th:field="*{id}">
                 <div class="mb-3 mt-3">
                     <label for="firstName" class="form-label">First Name:</label>
                     <input type="text" id="firstName" class="form-control" th:field="*{firstName}">
@@ -53,6 +54,20 @@
                           th:each="err : ${#fields.errors('address')}"
                           th:text="${err}"
                           th:errors="*{address}"/>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="address" class="form-label">Class:</label>
+                    <select th:field="*{schoolClass}">
+                        <option value=""> -- </option>
+                        <option th:each="tempClass : ${classLst}"
+                                th:value="${tempClass.id}"
+                                th:text="${tempClass.className}">
+                        </option>
+                    </select>
+                    <span class="text-danger" th:if="${#fields.hasErrors('schoolClass')}"
+                          th:each="err : ${#fields.errors('schoolClass')}"
+                          th:text="${err}"
+                          th:errors="*{schoolClass}"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
